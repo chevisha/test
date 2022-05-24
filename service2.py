@@ -11,38 +11,20 @@ NEAREST = 100
 NUM_RES = 40
 SCREENFUL = 40
 backend_port = 8101
-rank_port = 8076
+rank_port = 8200
 backend_address = "127.0.0.1"
 DIST_THRESHOLD = 0.3
-N_GRAM=10
+N_GRAM=2
 
 
-most_common=set() 
+most_common=set()  
 cnt=dict()
-kkk=0
-with open("most_common.txt", "r") as f:
-    
-    for i in f:
-        tmp=[]
-        for h in i.split():
-            if(h is not 'cnt:'):
-                tmp.append(h)
-            else:
-                break
-        
-        most_common.add(' '.join(i.split()[0:len(tmp)-2]))
-
-
 with open("most_common.txt", "r") as f:
     for i in f:
-        tmp=[]
-        for h in i.split():
-            if(h is not 'cnt:'):
-                tmp.append(h)
-            else:
-                break
-        cnt[' '.join(i.split()[0:len(tmp)-2])]=int(i.split()[-1])
-
+        most_common.add(' '.join(i.split()[0:2]))
+with open("most_common.txt", "r") as f:
+    for i in f:
+        cnt[' '.join(i.split()[0:2])]=int(i.split()[-1])
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -368,7 +350,7 @@ def api_query_dev():
 
 
 if __name__ == "__main__":
-        app.run(host='0.0.0.0', port=8889)
+         app.run(host='0.0.0.0', port=8890, threaded=False, processes=1, debug=False)
 
 #####   legacy code(not in use)   ######
 '''
